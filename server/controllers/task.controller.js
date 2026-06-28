@@ -3,7 +3,7 @@ import { AppError } from "../utils/AppError.js";
 import { AppResponse } from "../utils/AppResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-const ALLOWED_STATUS = ["todo", "in-process", "done"];
+const ALLOWED_STATUS = ["todo", "in-progress", "done"];
 const ALLOWED_PRIORITY = ["low", "medium", "high"];
 const ALLOWED_SORT_FIELDS = ["createdAt", "dueData", "priority"];
 
