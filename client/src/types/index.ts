@@ -1,16 +1,30 @@
-export type Status = "todo" | "in-process" | "done"
-export type Priority = "low" | "medium" | "high"
-
-export type TaskParams = Partial<{
-  priority: Priority
-  createdAt: Date
-  dueDate: Date
-}>
+export type Status = "todo" | "in-progress" | "done" | "all"
+export type Priority = "low" | "medium" | "high" | "all"
+export type Order = "asc" | "desc"
+export type SortBy = "priority" | "createdAt" | "dueDate"
 
 export type TaskPayload = {
   title: string
   description: string
   status: Status
   priority: Priority
+  dueDate: Date
+}
+
+export type Filters = {
+  status: Status
+  priority: Priority
+  search: string
+  order: Order
+  sortBy: SortBy
+}
+
+export type Task = {
+  _id: string
+  title: string
+  description: string
+  status: Status
+  priority: Priority
+  createdAt: Date
   dueDate: Date
 }

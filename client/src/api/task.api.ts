@@ -1,5 +1,5 @@
 import axois, { AxiosError } from "axios"
-import type { Status, TaskParams, TaskPayload } from "@/types"
+import type { Filters, Status, TaskPayload } from "@/types"
 
 const API_URL = import.meta.env.VITE_API_URL || "https://localhost:8080/api"
 
@@ -10,7 +10,7 @@ const axiosClient = axois.create({
   },
 })
 
-type AxoisApiError = AxiosError<{
+export type AxoisApiError = AxiosError<{
   message: string
   status: "fail" | "error"
 }>
@@ -28,7 +28,7 @@ function normalizeError(err: AxoisApiError) {
 }
 
 export const taskapi = {
-  async getTasks(params: TaskParams) {
+  async getTasks(params: Partial<Filters>) {
     try {
       const { data } = await axiosClient.get("/tasks", { params })
       return data
