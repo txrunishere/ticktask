@@ -16,6 +16,24 @@ export const globalErrorHandler = (err, _req, res, _next) => {
   error.statusCode = err.statusCode || 500;
 
   if (env.NODE_ENV === "development") {
+    if (error?.errors?.title.name === "ValidatorError") {
+      return res.status(error.statusCode).json({
+        message: "Invalid input",
+        status: error.status,
+        stack: err.stack,
+        error,
+      });
+    }
+
+    if (error?.kind === "ObjectId") {
+      return res.status(error.statusCode).json({
+        message: "Invalid ObjectId",
+        status: error.status,
+        stack: err.stack,
+        error,
+      });
+    }
+
     return res.status(error.statusCode).json({
       message: error.message,
       status: error.status,
@@ -25,6 +43,20 @@ export const globalErrorHandler = (err, _req, res, _next) => {
   }
 
   if (error.isOperational) {
+    if (error?.errors?.title.name === "ValidatorError") {
+      return res.status(error.statusCode).json({
+        message: "Invalid input",
+        status: error.status,
+      });
+    }
+
+    if (error?.kind === "ObjectId") {
+      return res.status(error.statusCode).json({
+        message: "Invalid ObjectId",
+        status: error.status,
+      });
+    }
+
     return res.status(error.statusCode).json({
       status: error.status,
       message: error.message,
