@@ -14,7 +14,6 @@ const DEFAULT_FILTERS: Filters = {
 export const useTasks = () => {
   const [tasks, setTasks] = useState<Array<Task>>([])
   const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
 
   const stats = useMemo(() => {
@@ -39,7 +38,6 @@ export const useTasks = () => {
 
   const fetchTasks = useCallback(async () => {
     setLoading(true)
-    setError(null)
     try {
       let params: Partial<Filters> = {}
 
@@ -53,7 +51,6 @@ export const useTasks = () => {
       setTasks(result.data.tasks)
     } catch (error) {
       const err = error as AxiosApiError
-      setError(err.message)
       toast.error(err.message)
     } finally {
       setLoading(false)
@@ -136,7 +133,6 @@ export const useTasks = () => {
   return {
     tasks,
     loading,
-    error,
     filters,
     stats,
     resetFilters,
