@@ -1,5 +1,5 @@
-import axois, { AxiosError } from "axios"
-import type { Filters, Status, TaskPayload } from "@/types"
+import axois from "axios"
+import type { AxiosApiError, Filters, TaskPayload, TaskStatus } from "@/types"
 
 const API_URL = import.meta.env.VITE_API_URL || "https://localhost:8080/api"
 
@@ -9,11 +9,6 @@ const axiosClient = axois.create({
     "Content-Type": "application/json",
   },
 })
-
-export type AxiosApiError = AxiosError<{
-  message: string
-  status: "fail" | "error"
-}>
 
 function normalizeError(err: AxiosApiError) {
   if (err.response) {
@@ -64,7 +59,7 @@ export const taskapi = {
     }
   },
 
-  async updateStatus(id: string, status: Status) {
+  async updateStatus(id: string, status: TaskStatus) {
     try {
       const { data } = await axiosClient.patch(`/tasks/${id}/status`, {
         status,

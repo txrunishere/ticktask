@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import type { Filters, Priority, SortBy, Status } from "@/types"
+import type { Filters, PriorityFilter, SortBy, StatusFilter } from "@/types"
 
 type ToolbarProps = {
   filters: Filters
@@ -28,7 +28,7 @@ export const Toolbar = ({
   resultCount,
   hasActiveFilters,
 }: ToolbarProps) => {
-  const [debounceSearch, setDebounceSearch] = useState(filters.search)
+  const [debounceSearch, setDebounceSearch] = useState<string>(filters.search)
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -68,7 +68,7 @@ export const Toolbar = ({
 
           <Select
             value={filters.status}
-            onValueChange={(v: Status) => onChange({ status: v })}
+            onValueChange={(v: StatusFilter) => onChange({ status: v })}
           >
             <SelectTrigger className="h-8 w-35 text-xs">
               <SelectValue placeholder="Status" />
@@ -83,7 +83,7 @@ export const Toolbar = ({
 
           <Select
             value={filters.priority}
-            onValueChange={(v: Priority) => onChange({ priority: v })}
+            onValueChange={(v: PriorityFilter) => onChange({ priority: v })}
           >
             <SelectTrigger className="h-8 w-35 text-xs">
               <SelectValue placeholder="Priority" />

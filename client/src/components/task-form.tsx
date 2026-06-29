@@ -23,8 +23,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import type { Priority, Status, Task, TaskPayload } from "@/types"
-import type { AxiosApiError } from "@/api/task.api"
+import type {
+  Task,
+  TaskPayload,
+  AxiosApiError,
+  TaskStatus,
+  TaskPriority,
+} from "@/types"
 
 type TaskFormProps = {
   open: boolean
@@ -37,8 +42,8 @@ type TaskFormProps = {
 type Form = {
   title: string
   description: string
-  status: Status
-  priority: Priority
+  status: TaskStatus
+  priority: TaskPriority
   dueDate: string
 }
 
@@ -56,7 +61,7 @@ const EMPTY_FORM: Form = {
   dueDate: "",
 }
 
-const toDateInputValue = (dateStr: string) => {
+const toDateInputValue = (dateStr: string | null) => {
   if (!dateStr) return ""
   const d = new Date(dateStr)
   if (Number.isNaN(d.getTime())) return ""
@@ -135,8 +140,6 @@ export const TaskForm = ({
   const handleSelectChange = (field: SelectFormField) => (value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }))
   }
-
-  console.log(errors)
 
   const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()

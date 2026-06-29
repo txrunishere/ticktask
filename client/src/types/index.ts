@@ -1,30 +1,39 @@
-export type Status = "todo" | "in-progress" | "done" | "all"
-export type Priority = "low" | "medium" | "high" | "all"
+import type { AxiosError } from "axios"
+
+export type TaskStatus = "todo" | "in-progress" | "done"
+export type TaskPriority = "low" | "medium" | "high"
+
+export type StatusFilter = TaskStatus | "all"
+export type PriorityFilter = TaskPriority | "all"
+
 export type Order = "asc" | "desc"
+
 export type SortBy = "priority" | "createdAt" | "dueDate"
 
-export type TaskPayload = {
-  title: string
-  description: string
-  status: Status
-  priority: Priority
-  dueDate: string | null
-}
-
-export type Filters = {
-  status: Status
-  priority: Priority
-  search: string
-  order: Order
-  sortBy: SortBy
-}
+export type TaskPayload = Pick<
+  Task,
+  "title" | "description" | "status" | "priority" | "dueDate"
+>
 
 export type Task = {
   _id: string
   title: string
   description: string
-  status: Status
-  priority: Priority
-  createdAt: Date
-  dueDate: string
+  status: TaskStatus
+  priority: TaskPriority
+  createdAt: string
+  dueDate: string | null
 }
+
+export type Filters = {
+  status: StatusFilter
+  priority: PriorityFilter
+  search: string
+  order: Order
+  sortBy: SortBy
+}
+
+export type AxiosApiError = AxiosError<{
+  message: string
+  status: "fail" | "error"
+}>

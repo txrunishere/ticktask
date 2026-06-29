@@ -1,5 +1,11 @@
-import { taskapi, type AxiosApiError } from "@/api/task.api"
-import type { Filters, Status, Task, TaskPayload } from "@/types"
+import { taskapi } from "@/api/task.api"
+import type {
+  Filters,
+  Task,
+  TaskPayload,
+  AxiosApiError,
+  TaskStatus,
+} from "@/types"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { toast } from "sonner"
 
@@ -91,29 +97,32 @@ export const useTasks = () => {
     }
   }, [])
 
-  const updateTaskStatus = useCallback(async (id: string, status: Status) => {
-    let previous: Task
-    setTasks((prev) =>
-      prev.map((t) => {
-        if (t._id === id) {
-          previous = t
-          return { ...t, status }
-        }
-        return t
-      })
-    )
-
-    try {
-      const updated = await taskapi.updateStatus(id, status)
+  const updateTaskStatus = useCallback(
+    async (id: string, status: TaskStatus) => {
+      let previous: Task
       setTasks((prev) =>
-        prev.map((t) => (t._id === id ? updated.data.task : t))
+        prev.map((t) => {
+          if (t._id === id) {
+            previous = t
+            return { ...t, status }
+          }
+          return t
+        })
       )
-    } catch (error) {
-      setTasks((prev) => prev.map((t) => (t._id === id ? previous : t)))
-      const err = error as AxiosApiError
-      toast.error(err.message)
-    }
-  }, [])
+
+      try {
+        const updated = await taskapi.updateStatus(id, status)
+        setTasks((prev) =>
+          prev.map((t) => (t._id === id ? updated.data.task : t))
+        )
+      } catch (error) {
+        setTasks((prev) => prev.map((t) => (t._id === id ? previous : t)))
+        const err = error as AxiosApiError
+        toast.error(err.message)
+      }
+    },
+    []
+  )
 
   const deleteTask = useCallback(async (id: string) => {
     const target = tasks.find((t) => t._id === id)
