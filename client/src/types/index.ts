@@ -8,7 +8,7 @@ export type TaskPayload = {
   description: string
   status: Status
   priority: Priority
-  dueDate: Date
+  dueDate: string | null
 }
 
 export type Filters = {
@@ -26,5 +26,5 @@ export type Task = {
   status: Status
   priority: Priority
   createdAt: Date
-  dueDate: Date
+  dueDate: string
 }

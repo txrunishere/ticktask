@@ -1,5 +1,5 @@
 import { Toaster } from "sonner"
-import { Header, Toolbar } from "./components"
+import { Header, TaskForm, Toolbar } from "./components"
 import { useTasks } from "./hooks/useTasks"
 import { useState } from "react"
 import type { Task } from "./types"
@@ -54,6 +54,14 @@ export function App() {
           onNewTask={onOpenCreateForm}
           onReset={resetFilters}
           resultCount={tasks.length}
+        />
+
+        <TaskForm
+          editingTask={editingTask}
+          onCreate={createTask}
+          onOpenChange={handleFormOpenChange}
+          onUpdate={updateTask}
+          open={formOpen}
         />
 
         <Toaster richColors position="bottom-right" />
