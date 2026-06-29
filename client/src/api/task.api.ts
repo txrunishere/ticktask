@@ -10,12 +10,12 @@ const axiosClient = axois.create({
   },
 })
 
-export type AxoisApiError = AxiosError<{
+export type AxiosApiError = AxiosError<{
   message: string
   status: "fail" | "error"
 }>
 
-function normalizeError(err: AxoisApiError) {
+function normalizeError(err: AxiosApiError) {
   if (err.response) {
     const { data } = err.response
     const message = data.message || "Something went wrong"
@@ -33,7 +33,7 @@ export const taskapi = {
       const { data } = await axiosClient.get("/tasks", { params })
       return data
     } catch (error) {
-      throw normalizeError(error as AxoisApiError)
+      throw normalizeError(error as AxiosApiError)
     }
   },
 
@@ -42,7 +42,7 @@ export const taskapi = {
       const { data } = await axiosClient.get(`/tasks/${id}`)
       return data
     } catch (error) {
-      throw normalizeError(error as AxoisApiError)
+      throw normalizeError(error as AxiosApiError)
     }
   },
 
@@ -51,7 +51,7 @@ export const taskapi = {
       const { data } = await axiosClient.post("/tasks", payload)
       return data
     } catch (error) {
-      throw normalizeError(error as AxoisApiError)
+      throw normalizeError(error as AxiosApiError)
     }
   },
 
@@ -60,7 +60,7 @@ export const taskapi = {
       const { data } = await axiosClient.put(`/tasks/${id}`, payload)
       return data
     } catch (error) {
-      throw normalizeError(error as AxoisApiError)
+      throw normalizeError(error as AxiosApiError)
     }
   },
 
@@ -71,7 +71,7 @@ export const taskapi = {
       })
       return data
     } catch (error) {
-      throw normalizeError(error as AxoisApiError)
+      throw normalizeError(error as AxiosApiError)
     }
   },
 
@@ -80,7 +80,7 @@ export const taskapi = {
       const { data } = await axiosClient.delete(`/tasks/${id}`)
       return data
     } catch (error) {
-      throw normalizeError(error as AxoisApiError)
+      throw normalizeError(error as AxiosApiError)
     }
   },
 }
